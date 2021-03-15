@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 public class LargestPreffix {
     public static void main(String[] args) {
-        String[] strs = {"ab", "a"};
-        String s = longestCommonPrefix(strs);
+        String[] strs = {"flower", "flow", "flight"};
+        String s = longestCommonPrefix2(strs);
         System.out.println(s);
     }
 
@@ -43,6 +43,30 @@ public class LargestPreffix {
         }
 
         return "";
+    }
+
+    /**
+     * startWith 优化
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix2(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+
+        if (strs.length == 1) {
+            return strs[0];
+        }
+
+        String templateStr = strs[0];
+        for (String str : strs) {
+            // 如果当前遍历值不包含公共前缀，那么公共前缀就需要-1
+            while (!str.startsWith(templateStr)) {
+                templateStr = templateStr.substring(0, templateStr.length() - 1);
+            }
+        }
+        return templateStr;
     }
 
 }
