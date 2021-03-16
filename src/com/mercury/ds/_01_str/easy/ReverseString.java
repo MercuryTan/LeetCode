@@ -1,4 +1,4 @@
-package com.mercury.ds._01_str;
+package com.mercury.ds._01_str.easy;
 
 import java.util.Arrays;
 
