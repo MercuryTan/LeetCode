@@ -2,12 +2,69 @@ package com.mercury.ds._01_str.medium;
 
 public class MyAtoi {
     public static void main(String[] args) {
-        System.out.println(myAtoi(""));
+//        System.out.println(myAtoi(""));
+
+        System.out.println(myAtoi2("-2147483647"));
     }
+
+    public static int myAtoi2(String s) {
+        int index = 0;
+        char[] chars = s.toCharArray();
+        int len = chars.length;
+        if (len == 0) {
+            return 0;
+        }
+        // 跳过空串
+        while (index < len && chars[index] == ' ') {
+            index++;
+        }
+
+        if (index == len) {
+            return 0;
+        }
+
+        // flag:1 正数   -1:负数
+        int flag = 1;
+        char firstChar = chars[index];
+        if (firstChar == '+') {
+            index++;
+        } else if (firstChar == '-') {
+            flag = -1;
+            index++;
+        }
+
+        int result = 0;
+        while (index < len) {
+            char curr = chars[index];
+            // 校验是否为数字，如果不是，那么跳出遍历
+            if (curr < '0' || curr > '9') {
+                break;
+            }
+
+            int currInt = curr - '0';
+
+            // 判断有没有越界
+            if ((result > Integer.MAX_VALUE / 10)
+                    || (result == Integer.MAX_VALUE / 10 && currInt > Integer.MAX_VALUE % 10)) {
+                return Integer.MAX_VALUE;
+
+            } else if ((result < Integer.MIN_VALUE / 10)
+                    || (result == Integer.MIN_VALUE / 10 && currInt > -(Integer.MIN_VALUE % 10))) {
+                return Integer.MIN_VALUE;
+            }
+
+            result = result * 10 + flag * (curr - '0');
+
+            index++;
+        }
+
+        return result;
+    }
+
 
     public static int myAtoi(String s) {
         s = s.trim();
-        if(s.length() == 0) {
+        if (s.length() == 0) {
             return 0;
         }
         int index = 0;
