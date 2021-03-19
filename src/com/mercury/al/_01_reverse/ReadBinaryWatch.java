@@ -7,7 +7,8 @@ import java.util.List;
 public class ReadBinaryWatch {
 
     public static void main(String[] args) {
-        System.out.println(readBinaryWatch(3));
+//        System.out.println(readBinaryWatch(3));
+        System.out.println(readBinaryWatch2(3)); // 解法2
     }
 
     static int[] hours = new int[]{1, 2, 4, 8, 0, 0, 0, 0, 0, 0};
@@ -43,7 +44,7 @@ public class ReadBinaryWatch {
      * 1、结束条件  hour>11 || minute >59  ||num==0  ==>保存路径
      * 2、路径
      * 3、可选择列表
-     *   比如i=0,可选择的就是>0的  选择num个
+     * 比如i=0,可选择的就是>0的  选择num个
      *
      * @param num    剩余需要点亮的灯数量
      * @param index  从索引index开始往后点亮灯
@@ -69,6 +70,27 @@ public class ReadBinaryWatch {
             backtrack(num - 1, i + 1, hour + hours[i], minute + minutes[i]);
         }
     }
+
+
+    /**
+     * 解法2：位运算
+     * @param num
+     * @return
+     */
+    public static List<String> readBinaryWatch2(int num) {
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 60; j++) {
+                if (Integer.bitCount(i) + Integer.bitCount(j) == num) {
+                    String m = j < 10 ? "0" : "";
+                    String str = i + ":" + m + j;
+                    result.add(str);
+                }
+            }
+        }
+        return result;
+    }
+
 
 
     /**
